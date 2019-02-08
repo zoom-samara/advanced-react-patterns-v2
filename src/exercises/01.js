@@ -10,7 +10,7 @@ class Toggle extends React.Component {
     on: false
   };
 
-  changeState = function () {
+  changeState = () => {
     this.setState(prevState => ({on: !prevState.on}), () => {
       this.props.onToggle(this.state.on)
     })
@@ -28,8 +28,8 @@ class Toggle extends React.Component {
   //
   // 💯 Use a state updater function for `newState` to avoid issues with batching
   render() {
-    // 🐨 here you'll want to return the switch with the `on` and `onClick` props
-    return <Switch onClick={this.changeState.bind(this)} on={this.state.on} />
+    // 🐨 here you'll want to return the switch with the `on` and `onClick` props1
+    return <Switch onClick={this.changeState} on={this.state.on} />
   };
 
 }

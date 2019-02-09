@@ -27,6 +27,7 @@ class Toggle extends React.Component {
   static defaultProps = {
     initialOn: false,
     onReset: () => {},
+    stateReducer: (state, callback) => callback
     // 🐨 let's add a default stateReducer here. It should return
     // the changes object as it is passed.
   }
@@ -34,6 +35,13 @@ class Toggle extends React.Component {
   state = this.initialState
   // 🐨 let's add a method here called `internalSetState`. It will simulate
   // the same API as `setState(updater, callback)`:
+  internalSetState = (updater, callback) => {
+    this.setState(state => {
+      const updaterFunc = typeof updater === 'function' ? updater(state) : state
+
+      return this.props.stateReducer(state, updaterFunc)
+    }, callback);
+  }
   // - updater: (changes object or function that returns the changes object)
   // - callback: Function called after the state has been updated
   // This will call setState with an updater function (a function that receives the state).
@@ -46,14 +54,13 @@ class Toggle extends React.Component {
   //
   // 🐨 Pass the callback to the 2nd argument to this.setState
   //
-  // 🐨 Finally, update all pre-existing instances of this.setState
-  // to this.internalSetState
+  // 🐨 Finally, update all pre-existing instances of this.setState  to this.internalSetState
   reset = () =>
-    this.setState(this.initialState, () =>
+    this.internalSetState(this.initialState, () =>
       this.props.onReset(this.state.on),
     )
   toggle = () =>
-    this.setState(
+    this.internalSetState(
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )

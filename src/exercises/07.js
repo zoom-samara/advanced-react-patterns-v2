@@ -12,7 +12,12 @@ class Toggle extends React.Component {
   //
   // 🐨 Rather than initializing state to have on as false,
   // set on to this.props.initialOn
-  state = {on: false}
+  static defaultProps = {
+    initialOn: false,
+    onReset: () => {}
+  }
+
+  state = {on: this.props.initialOn}
 
   // 🐨 now let's add a reset method here that resets the state
   // to the initial state. Then add a callback that calls
@@ -36,6 +41,9 @@ class Toggle extends React.Component {
       // 🐨 now let's include the reset method here
       // so folks can use that in their implementation.
       getTogglerProps: this.getTogglerProps,
+      reset: () => {
+        this.setState({on: this.props.initialOn}, () => this.props.onReset(this.state.on))
+      }
     }
   }
   render() {

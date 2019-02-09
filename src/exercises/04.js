@@ -5,7 +5,6 @@ import {Switch} from '../switch'
 
 // we're back to basics here. Rather than compound components,
 // let's use a render prop!
-const ToggleContext = React.createContext()
 
 class Toggle extends React.Component {
   state = {on: false}
@@ -24,11 +23,7 @@ class Toggle extends React.Component {
     // is a function. 🐨 So you can replace this with a call this.props.children()
     // But you'll need to pass it an object with `on` and `toggle`.
 
-    return <ToggleContext.Provider value={{ on, toggle: this.toggle,}}>
-      <ToggleContext.Consumer>
-        {this.props.children}
-      </ToggleContext.Consumer>
-    </ToggleContext.Provider>
+    return this.props.children({ on, toggle: this.toggle,})
   }
 }
 

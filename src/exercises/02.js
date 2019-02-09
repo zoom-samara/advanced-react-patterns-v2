@@ -52,7 +52,11 @@ class Toggle extends React.Component {
 
     return <div>
       {React.Children.map(this.props.children, item => {
-        return React.cloneElement(item, this);
+        if (typeof(item.type) === 'function') {
+          return React.cloneElement(item, this);
+        }
+        return item;
+
       })}</div>
 
   }
@@ -72,6 +76,7 @@ function Usage({
       <Toggle.On>The button is on</Toggle.On>
       <Toggle.Off>The button is off</Toggle.Off>
       <Toggle.Button />
+      <span>Hello</span>
     </Toggle>
   )
 }

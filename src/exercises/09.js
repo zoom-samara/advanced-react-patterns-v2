@@ -33,10 +33,10 @@ class Toggle extends React.Component {
   }
   reset = () =>
     // 🐨 add a `type` string property to this call
-    this.internalSetState(this.initialState, () =>
+    this.internalSetState({type: 'reset', ...this.initialState}, () =>
       this.props.onReset(this.state.on),
     )
-  toggle = ({type} = {}) =>
+  toggle = ({type = 'toggle'} = {}) =>
     this.internalSetState(
       ({on}) => ({on: !on, type}),
       () => this.props.onToggle(this.state.on),
